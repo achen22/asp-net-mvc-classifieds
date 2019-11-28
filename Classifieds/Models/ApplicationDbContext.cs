@@ -27,9 +27,7 @@ namespace Classifieds.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        [StringLength(10)]
-        [Column(TypeName = "char")]
-        public string Phone { get; set; }
+        public virtual ContactInfo ContactInfo { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -39,4 +37,17 @@ namespace Classifieds.Models
             return userIdentity;
         }
     }
+
+    public class ContactInfo
+    {
+        public int Id { get; set; }
+
+        [StringLength(80)]
+        public string Name { get; set; }
+
+        [StringLength(10)]
+        [DataType("char")]
+        public string Phone { get; set; }
+    }
+
 }

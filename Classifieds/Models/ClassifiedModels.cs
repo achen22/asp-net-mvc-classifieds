@@ -7,6 +7,15 @@ using System.Web;
 
 namespace Classifieds.Models
 {
+    public class ClassifiedType
+    {
+        public byte Id { get; set; }
+
+        [StringLength(8)]
+        [Column(TypeName = "char")]
+        public string Name { get; set; }
+    }
+
     public class ClassifiedAd
     {
         /* Fields */
@@ -24,7 +33,8 @@ namespace Classifieds.Models
         [Column(TypeName = "ntext")]
         public string Description { get; set; }
 
-        public DateTime? Expires { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Expires { get; set; }
 
         /* Relationships */
         [ForeignKey(nameof(UserId))]
@@ -34,12 +44,24 @@ namespace Classifieds.Models
         public ClassifiedType Type { get; set; }
     }
 
-    public class ClassifiedType
+    public class ClassifiedAdViewModel
     {
-        public byte Id { get; set; }
+        public byte TypeId { get; set; }
 
-        [StringLength(8)]
-        [Column(TypeName = "char")]
-        public string Name { get; set; }
+        [MaxLength(128)]
+        [Required]
+        public string Title { get; set; }
+
+        [Required]
+        [DataType(DataType.MultilineText)]
+        public string Description { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime ExpireDate { get; set; }
+
+        [DataType(DataType.Time)]
+        public DateTime ExpireTime { get; set; }
+
+        public int jsTimezoneOffset { get; set; }
     }
 }

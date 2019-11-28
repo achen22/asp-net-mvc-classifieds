@@ -109,4 +109,14 @@ namespace Classifieds.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+    public class ContactInfoViewModel
+    {
+        [StringLength(80)]
+        public string Name { get; set; }
+
+        [StringLength(10)]
+        [Phone, DataType(DataType.PhoneNumber)]
+        public string Phone { get; set; }
+    }
 }

@@ -183,6 +183,10 @@
     <Compile Include="Migrations\201911210429342_AddClassifieds.Designer.cs">
       <DependentUpon>201911210429342_AddClassifieds.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911280139187_AddContactInfo.cs" />
+    <Compile Include="Migrations\201911280139187_AddContactInfo.Designer.cs">
+      <DependentUpon>201911280139187_AddContactInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -300,6 +304,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911210429342_AddClassifieds.resx">
       <DependentUpon>201911210429342_AddClassifieds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911280139187_AddContactInfo.resx">
+      <DependentUpon>201911280139187_AddContactInfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
