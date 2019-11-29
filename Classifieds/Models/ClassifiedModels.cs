@@ -58,11 +58,11 @@ namespace Classifieds.Models
         public string Description { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime ExpireDate { get; set; }
+        public DateTime? ExpireDate { get; set; }
 
         [DataType(DataType.Time)]
-        public DateTime ExpireTime { get; set; }
+        public DateTime? ExpireTime { get; set; }
 
-        public int jsTimezoneOffset { get; set; }
+        public int? jsTimezoneOffset { get; set; }
     }
 }

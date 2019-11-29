@@ -9,24 +9,25 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Type.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Expires)
-        </th>
-        <th>Contact Details</th>
-        <th></th>
-    </tr>
-
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Type.Name)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Expires)
+            </th>
+            <th scope="col">Contact Details</th>
+            <th></th>
+        </tr>
+    </thead>
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -42,19 +43,19 @@
             @Html.DisplayFor(modelItem => item.Expires)
         </td>
         <td>
-            @if (item.User != null)
+        @if (item.User != null)
             {
-                if (!string.IsNullOrWhiteSpace(item.User.ContactInfo?.Name))
-                {
-                    @Html.DisplayFor(modelItem => item.User.ContactInfo.Name)<br />
-                }
-                @Html.DisplayFor(modelItem => item.User.Email)
-                if (!string.IsNullOrWhiteSpace(item.User.ContactInfo?.Phone))
-                {
-                    <br /><text>Ph: </text>
-                    @Html.DisplayFor(modelItem => item.User.ContactInfo.Phone)
-                }
+            if (!string.IsNullOrWhiteSpace(item.User.ContactInfo?.Name))
+            {
+            @Html.DisplayFor(modelItem => item.User.ContactInfo.Name)<br />
             }
+            <a href="mailto:@(item.User.Email)" target="_top">@item.User.Email</a>
+            if (!string.IsNullOrWhiteSpace(item.User.ContactInfo?.Phone))
+            {
+            <br /><text>Ph: </text>
+            @Html.DisplayFor(modelItem => item.User.ContactInfo.Phone)
+            }
+        }
         </td>
         <td>
             @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |*@

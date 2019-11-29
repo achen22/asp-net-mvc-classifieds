@@ -60,16 +60,22 @@ namespace Classifieds.Controllers
         {
             if (ModelState.IsValid)
             {
+                var expireDate = model.ExpireDate ?? DateTime.Today.AddDays(30);
+                if (model.ExpireTime == null)
+                {
+                    expireDate = expireDate.AddDays(1);
+                }
+                var expireTime = model.ExpireTime ?? DateTime.Today;
                 var classifiedAd = new ClassifiedAd()
                 {
                     TypeId = model.TypeId,
                     Title = model.Title,
                     Description = model.Description,
                     Created = DateTime.Now,
-                    Expires = model.ExpireDate
-                        .AddHours(model.ExpireTime.Hour)
-                        .AddMinutes(model.ExpireTime.Minute)
-                        .AddSeconds(model.ExpireTime.Second)
+                    Expires = expireDate
+                        .AddHours(expireTime.Hour)
+                        .AddMinutes(expireTime.Minute)
+                        .AddSeconds(expireTime.Second)
                 };
                 db.ClassifiedAds.Add(classifiedAd);
                 await db.SaveChangesAsync();
