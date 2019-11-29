@@ -14,13 +14,13 @@ namespace Classifieds.Controllers
 {
     public class ClassifiedsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext _db = new ApplicationDbContext();
 
         // GET: /
         [Route("/")]
         public async Task<ActionResult> Index()
         {
-            var ads = await db.ClassifiedAds.AsNoTracking()
+            var ads = await _db.ClassifiedAds.AsNoTracking()
                 .Include(c => c.Type)
                 .Include(c => c.User.ContactInfo)
                 .ToListAsync();
@@ -35,7 +35,7 @@ namespace Classifieds.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ClassifiedAd classifiedAd = await db.ClassifiedAds.AsNoTracking()
+            ClassifiedAd classifiedAd = await _db.ClassifiedAds.AsNoTracking()
                 .Include(c => c.Type)
                 .Include(c => c.User.ContactInfo)
                 .SingleOrDefaultAsync(c => c.Id == id);
@@ -50,7 +50,7 @@ namespace Classifieds.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            ViewBag.TypeId = new SelectList(db.ClassifiedTypes, "Id", "Name");
+            ViewBag.TypeId = new SelectList(_db.ClassifiedTypes, "Id", "Name");
             return View();
         }
 
@@ -82,12 +82,12 @@ namespace Classifieds.Controllers
                         .AddMinutes(expireTime.Minute)
                         .AddSeconds(expireTime.Second)
                 };
-                db.ClassifiedAds.Add(classifiedAd);
-                await db.SaveChangesAsync();
+                _db.ClassifiedAds.Add(classifiedAd);
+                await _db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TypeId = new SelectList(db.ClassifiedTypes, "Id", "Name");
+            ViewBag.TypeId = new SelectList(_db.ClassifiedTypes, "Id", "Name");
             return View(model);
         }
         /*
@@ -153,7 +153,7 @@ namespace Classifieds.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

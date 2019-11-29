@@ -17,14 +17,26 @@ namespace Classifieds.Models
         public string Name { get; set; }
     }
 
+    /// <summary>
+    /// A classified ad that corresponds to a record in the database.
+    /// </summary>
     public class ClassifiedAd
     {
         /* Fields */
+        /// <summary>
+        /// Auto-generated unique ID for this record; this is 0 for records that have yet to be added to the database
+        /// </summary>
         public int Id { get; set; }
 
+        /// <summary>
+        /// Foreign key reference to the ApplicationUser model that created this ad
+        /// </summary>
         [MaxLength(128)]
         public string UserId { get; set; }
 
+        /// <summary>
+        /// Foreign key reference to the ClassifiedType of this ad
+        /// </summary>
         public byte TypeId { get; set; }
 
         [MaxLength(128)]
@@ -45,6 +57,9 @@ namespace Classifieds.Models
         public ClassifiedType Type { get; set; }
     }
 
+    /// <summary>
+    /// View model to validate input when adding or updating a ClassifiedAd
+    /// </summary>
     public class ClassifiedAdViewModel
     {
         public byte TypeId { get; set; }

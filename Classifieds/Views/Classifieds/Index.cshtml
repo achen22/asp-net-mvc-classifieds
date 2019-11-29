@@ -9,59 +9,61 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.Type.Name)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.Expires)
-            </th>
-            <th scope="col">Contact Details</th>
-            <th></th>
-        </tr>
-    </thead>
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Expires)
-        </td>
-        <td>
-        @if (item.User != null)
-            {
-            if (!string.IsNullOrWhiteSpace(item.User.ContactInfo?.Name))
-            {
-            @Html.DisplayFor(modelItem => item.User.ContactInfo.Name)<br />
-            }
-            <a href="mailto:@(item.User.Email)" target="_top">@item.User.Email</a>
-            if (!string.IsNullOrWhiteSpace(item.User.ContactInfo?.Phone))
-            {
-            <br /><text>Ph: </text>
-            @Html.DisplayFor(modelItem => item.User.ContactInfo.Phone)
-            }
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.Type.Name)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th scope="col" class="d-sm-table-cell d-none">
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.Expires)
+                </th>
+                <th scope="col">Contact Details</th>
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td class="d-sm-table-cell d-none">
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Expires)
+                </td>
+                <td>
+                    @if (item.User != null)
+                    {
+                        if (!string.IsNullOrWhiteSpace(item.User.ContactInfo?.Name))
+                        {
+                            @Html.DisplayFor(modelItem => item.User.ContactInfo.Name)<br />
+                        }
+                        <a href="mailto:@(item.User.Email)" target="_top">@item.User.Email</a>
+                        if (!string.IsNullOrWhiteSpace(item.User.ContactInfo?.Phone))
+                        {
+                            <br /><text>Ph: </text>
+                            @Html.DisplayFor(modelItem => item.User.ContactInfo.Phone)
+                        }
+                    }
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |*@
+                    @Html.ActionLink("Details", "Details", new { id = item.Id })
+                </td>
+            </tr>
         }
-        </td>
-        <td>
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |*@
-            @Html.ActionLink("Details", "Details", new { id = item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+    </table>
+</div>
