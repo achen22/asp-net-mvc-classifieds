@@ -9,50 +9,73 @@
 <div>
     <h4>ClassifiedAd</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
+    <dl class="row">
+        <dt class="col-md-2 col-sm-3 text-sm-right">
             @Html.DisplayNameFor(model => model.Type.Name)
         </dt>
-
-        <dd>
+        <dd class="col-md-10 col-sm-9">
             @Html.DisplayFor(model => model.Type.Name)
         </dd>
 
-        <dt>
+        <dt class="col-md-2 col-sm-3 text-sm-right">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
-
-        <dd>
+        <dd class="col-md-10 col-sm-9">
             @Html.DisplayFor(model => model.Title)
         </dd>
 
-        <dt>
+        <dt class="col-md-2 col-sm-3 text-sm-right">
             @Html.DisplayNameFor(model => model.Description)
         </dt>
-
-        <dd>
+        <dd class="col-md-10 col-sm-9">
             @Html.DisplayFor(model => model.Description)
         </dd>
 
-        <dt>
+        <dt class="col-md-2 col-sm-3 text-sm-right">
             @Html.DisplayNameFor(model => model.Created)
         </dt>
-
-        <dd>
+        <dd class="col-md-10 col-sm-9">
             @Html.DisplayFor(model => model.Created)
         </dd>
 
-        <dt>
+        <dt class="col-md-2 col-sm-3 text-sm-right">
             @Html.DisplayNameFor(model => model.Expires)
         </dt>
-
-        <dd>
+        <dd class="col-md-10 col-sm-9">
             @Html.DisplayFor(model => model.Expires)
         </dd>
 
+        @if (Model.User != null)
+        {
+            if (!string.IsNullOrWhiteSpace(Model.User.ContactInfo?.Name))
+            {
+                <dt class="col-md-2 col-sm-3 text-sm-right">
+                    @Html.DisplayNameFor(model => model.User.ContactInfo.Name)
+                </dt>
+                <dd class="col-md-10 col-sm-9">
+                    @Html.DisplayFor(model => model.User.ContactInfo.Name)
+                </dd>
+            }
+
+            <dt class="col-md-2 col-sm-3 text-sm-right">
+                @Html.DisplayNameFor(model => model.User.Email)
+            </dt>
+            <dd class="col-md-10 col-sm-9">
+                <a href="mailto:@(Model.User.Email)" target="_top">@Model.User.Email</a>
+            </dd>
+            if (!string.IsNullOrWhiteSpace(Model.User.ContactInfo?.Phone))
+            {
+                <dt class="col-md-2 col-sm-3 text-sm-right">
+                    @Html.DisplayNameFor(model => model.User.ContactInfo.Phone)
+                </dt>
+                <dd class="col-md-10 col-sm-9">
+                    @Html.DisplayFor(model => model.User.ContactInfo.Phone)
+                </dd>
+            }
+        }
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) @*|
-    @Html.ActionLink("Back to List", "Index")*@
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
+    @Html.ActionLink("Back to List", "Index")
 </p>

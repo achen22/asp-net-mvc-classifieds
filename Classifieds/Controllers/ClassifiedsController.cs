@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Classifieds.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Classifieds.Controllers
 {
@@ -46,14 +47,17 @@ namespace Classifieds.Controllers
         }
 
         // GET: ClassifiedAds/Create
+        [Authorize]
         public ActionResult Create()
         {
+            ViewBag.TypeId = new SelectList(db.ClassifiedTypes, "Id", "Name");
             return View();
         }
 
         // POST: ClassifiedAds/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(ClassifiedAdViewModel model)
@@ -68,6 +72,7 @@ namespace Classifieds.Controllers
                 var expireTime = model.ExpireTime ?? DateTime.Today;
                 var classifiedAd = new ClassifiedAd()
                 {
+                    UserId = User.Identity.GetUserId(),
                     TypeId = model.TypeId,
                     Title = model.Title,
                     Description = model.Description,
@@ -82,6 +87,7 @@ namespace Classifieds.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.TypeId = new SelectList(db.ClassifiedTypes, "Id", "Name");
             return View(model);
         }
         /*
@@ -142,6 +148,7 @@ namespace Classifieds.Controllers
             return RedirectToAction("Index");
         }
         */
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
