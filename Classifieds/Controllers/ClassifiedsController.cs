@@ -19,7 +19,11 @@ namespace Classifieds.Controllers
         [Route("/")]
         public async Task<ActionResult> Index()
         {
-            return View(await db.ClassifiedAds.ToListAsync());
+            var ads = await db.ClassifiedAds.AsNoTracking()
+                .Include(c => c.Type)
+                .Include(c => c.User.ContactInfo)
+                .ToListAsync();
+            return View(ads);
         }
 
         // GET: Classifieds/5
@@ -30,7 +34,10 @@ namespace Classifieds.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ClassifiedAd classifiedAd = await db.ClassifiedAds.FindAsync(id);
+            ClassifiedAd classifiedAd = await db.ClassifiedAds.AsNoTracking()
+                .Include(c => c.Type)
+                .Include(c => c.User.ContactInfo)
+                .SingleOrDefaultAsync(c => c.Id == id);
             if (classifiedAd == null)
             {
                 return HttpNotFound();
@@ -49,16 +56,27 @@ namespace Classifieds.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(ClassifiedAd classifiedAd)
+        public async Task<ActionResult> Create(ClassifiedAdViewModel model)
         {
             if (ModelState.IsValid)
             {
+                var classifiedAd = new ClassifiedAd()
+                {
+                    TypeId = model.TypeId,
+                    Title = model.Title,
+                    Description = model.Description,
+                    Created = DateTime.Now,
+                    Expires = model.ExpireDate
+                        .AddHours(model.ExpireTime.Hour)
+                        .AddMinutes(model.ExpireTime.Minute)
+                        .AddSeconds(model.ExpireTime.Second)
+                };
                 db.ClassifiedAds.Add(classifiedAd);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(classifiedAd);
+            return View(model);
         }
         /*
         // GET: ClassifiedAds/Edit/5

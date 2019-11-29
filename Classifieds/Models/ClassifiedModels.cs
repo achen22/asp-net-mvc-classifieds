@@ -13,6 +13,7 @@ namespace Classifieds.Models
 
         [StringLength(8)]
         [Column(TypeName = "char")]
+        [Display(Name = "Type")]
         public string Name { get; set; }
     }
 
